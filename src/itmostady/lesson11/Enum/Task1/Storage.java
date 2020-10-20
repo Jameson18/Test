@@ -43,20 +43,6 @@ public class Storage {
         }
     }
 
-    public String getInform() {
-        StringBuilder sb = new StringBuilder();
-        for (User dir : stuff) {
-            if (dir != null)
-                sb.append(dir.getName())
-                        .append(" ")
-                        .append(dir.getSalary())
-                        .append(" ")
-                        .append(dir.getPosition())
-                        .append("\n");
-        }
-        return sb.toString();
-    }
-
     @Override
     public String toString() {
         return "Storage{" +
