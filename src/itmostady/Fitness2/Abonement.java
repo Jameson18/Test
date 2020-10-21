@@ -7,16 +7,16 @@ abstract public class Abonement {
     protected String name;
     protected String surname;
     protected int year;
-    LocalDate currentTime = LocalDate.now();
-    protected LocalDate regTime;
-    protected LocalDate endRegTime;
+    LocalDateTime currentTime = LocalDateTime.now();
+    protected LocalDateTime regTime;
 
-    public Abonement(String name, String surname, int year, LocalDate regTime, LocalDate endRegTime) {
+
+    public Abonement(String name, String surname, int year) {
         this.name = name;
         this.surname = surname;
         this.year = year;
-        this.regTime = regTime;
-        this.endRegTime = endRegTime;
+        this.regTime = currentTime;
+
     }
 
     public String getName() {
@@ -49,7 +49,7 @@ abstract public class Abonement {
         this.year = year;
     }
 
-    public LocalDate getRegTime() {
+    public LocalDateTime getRegTime() {
         return regTime;
     }
 
@@ -57,11 +57,5 @@ abstract public class Abonement {
         this.regTime = currentTime;
     }
 
-    public LocalDate getEndRegTime() {
-        return endRegTime;
-    }
 
-    public void setEndRegTime(LocalDate endRegTime) {
-        this.endRegTime = endRegTime;
-    }
 }

@@ -5,46 +5,59 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 
-public class Fitness extends AbonementFull implements InputGroup, InputGym, InputPool{
+public class Fitness{
     LocalTime open = LocalTime.of(8, 0);
     LocalTime close = LocalTime.of(22, 0);
     LocalTime currentTime = LocalTime.now();
     LocalDate checkReg = LocalDate.now();
+    Abonement[] pool = new Abonement[20];
+    Abonement[] gym = new Abonement[20];
+    Abonement[] group = new Abonement[20];
 
-
-    public Fitness(String name, String surname, int year, LocalDate regTime, LocalDate endRegTime) {
-        super(name, surname, year, regTime, endRegTime);
-    }
 
     public boolean isOpen(){
         return  (currentTime.isAfter(open) || currentTime.isBefore(close));
     }
 
-    Fitness[] fit = new Fitness[20];
-    public void input(Fitness fitness){
-        while (!isOpen()){
-            for (int i = 0; i < fit.length; i++) {
-                fit[i] = null;
-            }
+    
+
+    public void addAbonement(String zone, Abonement abonement){
+        // ""
+        if (zone.equals("pool") && abonement instanceof InputPool) {
+            //
+            addToPool(abonement);
         }
-        System.out.println("Closed");
-        if (isOpen() || getEndRegTime().isAfter(checkReg)){
-            System.out.println("Абонемент просрочен");
-        }else if (isOpen() || getEndRegTime().isBefore(checkReg) && getEndRegTime().isEqual(checkReg)){
-            for (int i = 0; i < fit.length; i++) {
-                if (fit[i] == null)
-                    fit[i] = fitness;
-            }
+        if (zone.equals("gym") && abonement instanceof InputGym) {
+            addToGym(abonement);
         }
-    }
-    public void getFitnessInfo(String info){
-        System.out.println(Arrays.toString(fit));
+        if (zone.equals("group") && abonement instanceof InputGroup) {
+            addToGroup(abonement);
+        }
     }
 
-    @Override
-    public String toString() {
-        return "Fitness{" +
-                "fit=" + Arrays.toString(fit) +
-                "} " + super.toString();
+    private void addToPool(Abonement abonement){
+        for (int i = 0; i < pool.length; i++) {
+            if (pool[i] == null)
+                pool[i] = abonement;
+            return;
+        }
     }
+
+    private void addToGym(Abonement abonement){
+        for (int i = 0; i < gym.length; i++) {
+            if (gym[i] == null)
+                gym[i] = abonement;
+            return;
+        }
+    }
+
+    private void addToGroup(Abonement abonement){
+        for (int i = 0; i < group.length; i++) {
+            if (group[i] == null)
+                group[i] = abonement;
+            return;
+        }
+    }
+
+
 }
