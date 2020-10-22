@@ -1,7 +1,5 @@
 package itmostady.lesson11.Enum.Task1;
 
-import itmostady.lesson6alp.Alpinist;
-
 import java.util.Arrays;
 
 public class Storage {
@@ -14,7 +12,7 @@ public class Storage {
     }
 
     public void addDirector(User dir) {
-        if (dir.position.equals(Position.ДИРЕКТОР)) {
+        if (dir.position.equals(Position.DIRECTOR)) {
             for (int i = 0; i < stuff.length; i++) {
                 if (stuff[i] == null)
                     stuff[i] = dir;
@@ -24,7 +22,7 @@ public class Storage {
     }
 
     public void addCleaner(User clean) {
-        if (clean.position.equals(Position.УБОРЩИК)) {
+        if (clean.position.equals(Position.CLEANER)) {
             for (int i = 0; i < stuff.length; i++) {
                 if (stuff[i] == null)
                     stuff[i] = clean;
@@ -34,7 +32,7 @@ public class Storage {
     }
 
     public void addAccountant(User acc) {
-        if (acc.position.equals(Position.БУХГАЛТЕР)) {
+        if (acc.position.equals(Position.ACCOUNTANT)) {
             for (int i = 0; i < stuff.length; i++) {
                 if (stuff[i] == null)
                     stuff[i] = acc;

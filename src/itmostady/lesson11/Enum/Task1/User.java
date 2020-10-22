@@ -47,6 +47,6 @@ public class User {
 }
 
 enum Position {
-    УБОРЩИК, ДИРЕКТОР, БУХГАЛТЕР
+    CLEANER, DIRECTOR, ACCOUNTANT
 
 }
