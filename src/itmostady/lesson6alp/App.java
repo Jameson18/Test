@@ -28,9 +28,7 @@ public class App {
         group3.addAlpinist(ola);
         System.out.println(group2);
         System.out.println(group3);
-        System.out.println(group3.getStatus());
-
-
-
+        System.out.println(group1.getAlpsInfo());
+        ;
     }
 }

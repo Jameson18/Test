@@ -43,10 +43,12 @@ public class AbonementFull extends Abonement implements InputGroup, InputGym, In
 
     @Override
     public void inputPool(Abonement abonement) {
-        if (!inputGym()){
+        if (!inputPool()){
             System.out.println("Not your time");
         }
     }
+
+
     @Override
     public String toString() {
         return "AbonementFull{" +
