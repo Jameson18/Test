@@ -6,45 +6,44 @@ public class AbonementOnce extends Abonement implements InputPool, InputGym{
     protected LocalDateTime regTime;
     protected LocalDateTime endRegTime;
 
-    public AbonementOnce(String name, String surname, int year) {
-        super(name, surname, year);
+    public AbonementOnce(Client client) {
+        super(client);
         this.regTime = currentTime;
         this.endRegTime = currentTime.plusDays(1);
     }
 
 
-    public boolean inputPool(){
-        return (currentTime.isAfter(regTime) || currentTime.isBefore(endRegTime));
+    public boolean inPool(){
+        return (currentTime.isAfter(regTime) && currentTime.isBefore(endRegTime));
     }
-    public boolean inputGym(){
-        return (currentTime.isAfter(regTime) || currentTime.isBefore(endRegTime));
+    public boolean inGym(){
+        return (currentTime.isAfter(regTime) && currentTime.isBefore(endRegTime));
     }
-    public String getInfo(){
-        return name + surname + year + regTime + endRegTime;
-    }
+
 
 
     @Override
-    public void inputGym(Abonement abonement) {
-        if (!inputGym()){
-            System.out.println("Not your time");
-        }
+    public boolean inputGym(Abonement abonement) {
+        boolean access = true;
+        if (!inGym()){
+            access = false;
+        }return access;
     }
 
     @Override
-    public void inputPool(Abonement abonement) {
-        if (!inputPool()){
-            System.out.println("Not your time");
-        }
+    public boolean inputPool(Abonement abonement) {
+        boolean access = true;
+        if (!inPool()){
+            access = false;
+        }return access;
     }
+
     @Override
     public String toString() {
         return "AbonementOnce{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", year=" + year +
-                ", regTime=" + regTime +
-                ", endRegTime=" + endRegTime +
-                "} ";
+                client +
+                ", Дата регистрации: " + regTime +
+                ", Действителен до: " + endRegTime +
+                '}';
     }
 }

@@ -10,50 +10,49 @@ public class AbonementDaily extends Abonement implements InputGym, InputGroup{
     protected final LocalTime outTime = LocalTime.of(16,0);
     protected final LocalTime curr = LocalTime.now();
 
-
-    public AbonementDaily(String name, String surname, int year) {
-        super(name, surname, year);
+    public AbonementDaily(Client client) {
+        super(client);
         this.regTime = currentTime;
         this.endRegTime = currentTime.plusDays(30);
     }
+
+
     public boolean open(){
         return (curr.isAfter(inTime) && curr.isBefore(outTime));
     }
 
-    public boolean inputGym(){
-        return (currentTime.isAfter(regTime) || currentTime.isBefore(endRegTime));
+    public boolean inGym(){
+        return (currentTime.isAfter(regTime) && currentTime.isBefore(endRegTime));
     }
 
-    public boolean inputGroup(){
-        return (currentTime.isAfter(regTime) || currentTime.isBefore(endRegTime));
+    public boolean inGroup(){
+        return (currentTime.isAfter(regTime) && currentTime.isBefore(endRegTime));
     }
 
-    public String getInfo(){
-        return name + surname + year + regTime + endRegTime;
-    }
 
 
     @Override
-    public void inputGroup(Abonement abonement) {
-        if (!inputGroup() && open()){
-            System.out.println("Not your time");
-        }
+    public boolean inputGroup(Abonement abonement) {
+        boolean access = true;
+        if (!inGroup() && !(open())){
+            access = false;
+        }return access;
     }
 
     @Override
-    public void inputGym(Abonement abonement) {
-        if (!inputGym() && open()){
-            System.out.println("Not your time");
-        }
+    public boolean inputGym(Abonement abonement) {
+        boolean access = true;
+        if (!inGym() && !(open())){
+            access = false;
+        }return access;
     }
+
     @Override
     public String toString() {
         return "AbonementDaily{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", year=" + year +
-                ", regTime=" + regTime +
-                ", endRegTime=" + endRegTime +
-                "} ";
+                client +
+                ", Дата регистрации: " + regTime +
+                ", Действителен до: " + endRegTime +
+                '}';
     }
 }
