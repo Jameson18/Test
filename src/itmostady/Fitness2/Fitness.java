@@ -20,20 +20,25 @@ public class Fitness{
 
     public void addAbonement(String zone, Abonement abonement){
         if (isOpen()){
-            if (zone.equals("pool") && abonement instanceof InputPool) {
-
-                if (abonement.inputPool()) {
+            if (zone.equals("pool")) {
+                if (abonement instanceof InputPool){
+                    if (abonement.inputPool()) {
                     addToPool(abonement);
-                }else System.out.println("По Вашему абонементу нет доступа. Проверьте время или зону");
+                }
+                } else System.out.println("По Вашему абонементу нет доступа. Проверьте время или зону");
             }
-            if (zone.equals("gym") && abonement instanceof InputGym) {
+            if (zone.equals("gym")) {
+                if (abonement instanceof InputGym){
                 if (abonement.inputGym()) {
                     addToGym(abonement);
+                }
                 }else System.out.println("По Вашему абонементу нет доступа. Проверьте время или зону");
             }
-            if (zone.equals("group") && abonement instanceof InputGroup) {
-                if (abonement.inputGroup()){
+            if (zone.equals("group")) {
+                if (abonement instanceof InputGroup){
+                if (abonement.inputGroup()) {
                     addToGroup(abonement);
+                }
                 }else System.out.println("По Вашему абонементу нет доступа. Проверьте время или зону");
             }
         }else System.out.println("Fitness Closed");

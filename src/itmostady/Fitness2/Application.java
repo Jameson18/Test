@@ -12,7 +12,7 @@ public class Application {
         AbonementFull abF1 = new AbonementFull(client1);
         Client client2 = new Client("Lisa", "Simpson", 1995);
         AbonementDaily abD1 = new AbonementDaily(client2);
-        fitness.addAbonement("group", abD1);
+        fitness.addAbonement("pool", abD1);
         fitness.addAbonement("group", abF1);
         Client client3 = new Client("Gomer", "Simpson", 1965);
         AbonementFull abF2 = new AbonementFull(client3);
