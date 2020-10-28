@@ -29,26 +29,17 @@ public class AbonementFull extends Abonement implements InputGroup, InputGym, In
 
     @Override
     public boolean inputGroup(Abonement abonement) {
-        boolean access = true;
-        if (!inGroup()){
-            access = false;
-        }return access;
+        return (!inGroup());
     }
 
     @Override
     public boolean inputGym(Abonement abonement) {
-        boolean access = true;
-        if (!inGym()){
-            access = false;
-        }return access;
+        return (!inGym());
     }
 
     @Override
     public boolean inputPool(Abonement abonement) {
-        boolean access = true;
-        if (!inPool()){
-            access = false;
-        }return access;
+        return (!inPool());
     }
 
     @Override

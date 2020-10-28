@@ -45,81 +45,58 @@ public class Fitness{
     }
 
     private void addToPool(Abonement abonement){
-        for (int i = 0; i < gym.length; i++) {
-            if (gym[i] != null) {
-                if ((abonement.client).equals(gym[i].client)) {
-                    System.out.println("По одному абонементу только в одну зону");
+        if (access(abonement)){
+            for (int i = 0; i < pool.length; i++) {
+                if (pool[i] == null) {
+                    pool[i] = abonement;
                     return;
                 }
-            } else for (int j = 0; j < group.length; j++) {
-                if (group[j] != null) {
-                    if ((abonement.client).equals(group[j].client)) {
-                        System.out.println("По одному абонементу только в одну зону");
-                        return;
-                    }
-                } else for (int k = 0; k < group.length; k++) {
-                    if (pool[i] != null && (abonement.client).equals(pool[i].client)){
-                        System.out.println("Вы уже вошли");
-                        return;
-                    }else if (pool[i] == null){
-                        pool[i] = abonement;
-                        return;
-                    }
-                }
             }
-        }
+        }else System.out.println("По одному абонементу только в одну зону");
     }
 
     private void addToGym(Abonement abonement) {
-        for (int i = 0; i < group.length; i++) {
-        if (group[i] != null) {
-            if ((abonement.client).equals(group[i].client)) {
-                System.out.println("По одному абонементу только в одну зону");
-                return;
-            }
-            } else for (int j = 0; j < pool.length; j++) {
-                if (pool[j] != null) {
-                    if ((abonement.client).equals(pool[j].client)) {
-                        System.out.println("По одному абонементу только в одну зону");
-                        return;
-                    }
-                } else for (int k = 0; k < gym.length; k++) {
-                    if (gym[k] != null && (abonement.client).equals(gym[k].client)){
-                        System.out.println("Вы уже вошли");
-                        return;
-                    }else if (gym[k] == null){
-                        gym[k] = abonement;
-                        return;
-                    }
+        if (access(abonement)){
+            for (int i = 0; i < gym.length; i++) {
+                if (gym[i] == null) {
+                    gym[i] = abonement;
+                    return;
                 }
             }
-        }
+        }else System.out.println("По одному абонементу только в одну зону");
     }
 
     private void addToGroup(Abonement abonement) {
-        for (int i = 0; i < gym.length; i++) {
-            if (gym[i] != null) {
-                if ((abonement.client).equals(gym[i].client)) {
-                    System.out.println("По одному абонементу только в одну зону");
+        if (access(abonement)){
+            for (int i = 0; i < group.length; i++) {
+                if (group[i] == null) {
+                    group[i] = abonement;
                     return;
                 }
-            } else for (int j = 0; j < pool.length; j++) {
-                if (pool[j] != null) {
-                    if ((abonement.client).equals(pool[j].client)) {
-                        System.out.println("По одному абонементу только в одну зону");
-                        return;
-                    }
-                } else for (int k = 0; k < group.length; k++) {
-                    if (group[i] != null && (abonement.client).equals(group[i].client)){
-                        System.out.println("Вы уже вошли");
-                        return;
-                    }else if (group[i] == null){
-                        group[i] = abonement;
-                        return;
-                    }
+            }
+        }else System.out.println("По одному абонементу только в одну зону");
+    }
+    public boolean access(Abonement abonement){
+        boolean access = true;
+         for (int i = 0; i < gym.length; i++) {
+             if (gym[i] != null) {
+                 if ((abonement.client).equals(gym[i].client)) {
+                     access = false;
+                 }
+             }
+         }for (int j = 0; j < pool.length; j++) {
+            if (pool[j] != null) {
+                if ((abonement.client).equals(pool[j].client)) {
+                    access = false;
                 }
             }
-        }
+        }for (int k = 0; k < group.length; k++) {
+            if (group[k] != null) {
+                if ((abonement.client).equals(group[k].client)) {
+                    access = false;
+                }
+            }
+        }return access;
     }
 
     @Override

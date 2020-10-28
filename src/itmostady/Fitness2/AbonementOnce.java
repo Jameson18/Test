@@ -24,18 +24,12 @@ public class AbonementOnce extends Abonement implements InputPool, InputGym{
 
     @Override
     public boolean inputGym(Abonement abonement) {
-        boolean access = true;
-        if (!inGym()){
-            access = false;
-        }return access;
+        return (!inGym());
     }
 
     @Override
     public boolean inputPool(Abonement abonement) {
-        boolean access = true;
-        if (!inPool()){
-            access = false;
-        }return access;
+        return (!inPool());
     }
 
     @Override

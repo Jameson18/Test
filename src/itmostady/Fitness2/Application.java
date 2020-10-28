@@ -16,8 +16,7 @@ public class Application {
         fitness.addAbonement("group", abF1);
         Client client3 = new Client("Gomer", "Simpson", 1965);
         AbonementFull abF2 = new AbonementFull(client3);
-        fitness.addAbonement("group", abF2);
-        fitness.addAbonement("group", abF2);
+        fitness.addAbonement("pool", abF2);
         fitness.addAbonement("pool", abF1);
 
         System.out.println(fitness);

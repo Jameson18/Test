@@ -33,18 +33,12 @@ public class AbonementDaily extends Abonement implements InputGym, InputGroup{
 
     @Override
     public boolean inputGroup(Abonement abonement) {
-        boolean access = true;
-        if (!inGroup() && !(open())){
-            access = false;
-        }return access;
+       return (!inGroup());
     }
 
     @Override
     public boolean inputGym(Abonement abonement) {
-        boolean access = true;
-        if (!inGym() && !(open())){
-            access = false;
-        }return access;
+        return (!inGym());
     }
 
     @Override
