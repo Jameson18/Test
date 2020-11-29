@@ -16,6 +16,7 @@ public class Client {
     private Scanner scanner;
     private LocalDateTime time;
 
+
     public Client(){
         this.ip = getIp();
         this.port = getPort();
@@ -54,16 +55,20 @@ public class Client {
         return Integer.parseInt(properties.getProperty("port"));
     }
 
-    public void start() throws Exception {
-        System.out.println("Введите Имя");
-        String name = scanner.nextLine();
-        String message;
-        System.out.println(Arrays.toString(Command.values()));
-        while (true){
-            System.out.println("Введите сообщение или команду");
-            message = scanner.nextLine();
-            sendAndPrintMessage(SimpleMessage.getMessage(name, message));
-
+    public void start() {
+        try {
+            System.out.println("Введите Имя");
+            String name = scanner.nextLine();
+            String message;
+            System.out.println(Arrays.toString(Command.values()));
+            while (true) {
+                System.out.println("Введите сообщение или команду");
+                message = scanner.nextLine();
+                if ("exit".equalsIgnoreCase(message)) break;
+                sendAndPrintMessage(SimpleMessage.getMessage(name, message));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     
@@ -72,11 +77,6 @@ public class Client {
             connection.sendMessage(message);
             SimpleMessage fromServer = connection.readMessage();
             System.out.println("от сервера: " + fromServer);
-            if ("Disconnecting...".equalsIgnoreCase(fromServer.getText())){
-                connection.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

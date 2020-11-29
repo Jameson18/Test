@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class SimpleServer {
     private Connection connection;
@@ -15,41 +16,43 @@ public class SimpleServer {
     public int getCount() {
         return count;
     }
-    public long Ping(SimpleMessage message){
+
+    public long Ping(LocalDateTime dataTime){
         LocalDateTime time = LocalDateTime.now();
-        return ChronoUnit.MILLIS.between(message.getDateTime(), time);
+        return ChronoUnit.MILLIS.between(dataTime, time);
     }
-    private void messageProcess(String s) throws Exception {
-        if (Command.HELP.name().equalsIgnoreCase(s)){
+
+    private void messageProcess(SimpleMessage s, LocalDateTime data) throws Exception {
+        if (Command.HELP.toString().equalsIgnoreCase(s.getText())){
             connection.sendMessage(SimpleMessage.getMessage("server",
                     Arrays.toString(Command.values())));
         }
-        else if (Command.COUNT.name().equalsIgnoreCase(s)){
+        else if (Command.COUNT.toString().equalsIgnoreCase(s.getText())){
             connection.sendMessage(SimpleMessage.getMessage("server",
                     "Количество подключений: " + getCount()));
         }
-        else if (Command.PING.name().equalsIgnoreCase(s)){
+        else if (Command.PING.toString().equalsIgnoreCase(s.getText())){
             connection.sendMessage(SimpleMessage.getMessage("server",
-                    "Пинг: " + Ping(connection.readMessage())));
-        }
-        else if (Command.EXIT.name().equalsIgnoreCase(s)){
-            connection.sendMessage(SimpleMessage.getMessage("server", "Disconnecting..."));
+                    "Пинг: " + Ping(data)));
         }
         else connection.sendMessage(SimpleMessage.getMessage("server", "Попробуйте снова"));
 
     }
 
     public void start() throws Exception {
-        try (ServerSocket serverSocket = new ServerSocket(8090)){ // ожидание клиента
+        try (ServerSocket serverSocket = new ServerSocket(8090)) { // ожидание клиента
             System.out.println("Server started");
             while (true){
                 Socket socket = serverSocket.accept();// принятие клиента
                 connection = new Connection(socket);
-
-                String s = connection.readMessage().getText();
-                messageProcess(s);
-                connection.sendMessage(SimpleMessage.getMessage("server", "получено"));
-
+                count++;
+                SimpleMessage s = connection.readMessage();
+                System.out.println(s);
+                LocalDateTime t = s.getDateTime();
+                if (Objects.isNull(s)){
+                    connection.sendMessage(SimpleMessage.getMessage("server", "получено"));
+                }
+                else messageProcess(s, t);
             }
         }
     }
