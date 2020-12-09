@@ -25,14 +25,11 @@ public class Connection implements AutoCloseable{
     }
 
     public void sendMessage(Message message) throws IOException {
-        synchronized (this.out){
-            out.writeObject(message);
-        }
+        out.writeObject(message);
     }
     public Message receiveMessage() throws IOException, ClassNotFoundException {
-        synchronized (this.in){
             return (Message) in.readObject();
-        }
+
     }
 
 

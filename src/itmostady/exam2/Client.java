@@ -15,6 +15,7 @@ public class Client {
     private Scanner scanner;
     private LocalDateTime time;
     Properties properties = new Properties();
+    private boolean access = true;
 
     public Client(){
         this.name = name;
@@ -60,9 +61,14 @@ public class Client {
             @Override
             public void run() {
                 try {
+                    Connection connection1 = new Connection(new Socket(getIp(), getPort()));
                     while (true) {
-                        Message message = (Message) connection.getIn().readObject();
+                        Message message = connection1.receiveMessage();
                         System.out.println(message.getSender() + ": " + message.getMessageText());
+                        if ("Имя уже занято".equalsIgnoreCase(message.getMessageText())) {
+                            access = false;
+                        }
+
                     }
                     }catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
@@ -70,36 +76,31 @@ public class Client {
             }
         }
 
-        private class Write implements Runnable{
 
-            @Override
-            public void run() {
-                Scanner scan = new Scanner(System.in);
-                while (true){
-                    try {
-                        String text = scan.nextLine();
-                        if (text.equalsIgnoreCase("exit")){
-                            connection.sendMessage(new Message(Client.this.name,
-                                    "disconnected"));
-                            connection.close();
-                        }
-                        else connection.sendMessage(new Message(Client.this.name, text));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
 
         public void start() throws Exception{
         try{
-            System.out.println("Введите Имя");
-            name = scanner.nextLine();
             Thread read = new Thread(new Read());
             read.start();
-            Thread write = new Thread(new Write());
-            write.start();
+            String message;
+            for (int i = 0; i < 100; i++) {
+                System.out.println("Введите Имя");
+                name = scanner.nextLine();
+                connection.sendMessage(Message.getMessage(name, ""));
+                Thread.sleep(3000);
+                if (access){
+                    while (true){
+                        System.out.println("Введите сообщение");
+                        message = scanner.nextLine();
+                        if ("exit".equalsIgnoreCase(message)){
+                            connection.sendMessage(Message.getMessage(name, "disconnected"));
+                            break;
+                        }else connection.sendMessage(Message.getMessage(name, message));
+                    }
+                }read.interrupt();
+                break;
 
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
