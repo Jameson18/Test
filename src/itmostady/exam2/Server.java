@@ -36,15 +36,18 @@ public class Server {
         @Override
         public void run() {
             try{
-                Message message = this.connection.receiveMessage();
-                if (userMap.containsKey(message.getSender())){
-                    connection.sendMessage(Message.getMessage("От сервера", "Имя уже занято"));
-                }else if (message.getMessageText().
-                        equalsIgnoreCase("disconnected")){
-                    removeUser(message.getSender());
-                }else addUser(message.getSender(), this.connection);
                 while (true) {
-                        messages.add(message);
+                    Message message = connection.receiveMessage();
+                    messages.add(message);
+//                if (userMap.containsKey(message.getSender())){
+//                    connection.sendMessage(Message.getMessage("От сервера", "Имя уже занято"));
+//                }else if (message.getMessageText().
+//                        equalsIgnoreCase("disconnected")){
+//                    removeUser(message.getSender());
+//                }else addUser(message.getSender(), this.connection);
+//                while (true) {
+//                        messages.add(message);
+//                }
                 }
                 } catch (Exception e) {
                 e.printStackTrace();
@@ -55,9 +58,9 @@ public class Server {
     private class Writer implements Runnable{
         private Connection connection;
 
-        private Writer(Connection connection) {
-            this.connection = connection;
-        }
+//       // private Writer() {
+//            this.connection = connection;
+//        }
 
 
         @Override
@@ -82,14 +85,18 @@ public class Server {
         try {
             ServerSocket serverSocket = new ServerSocket(8090);
             System.out.println("Server started");
-
+            Thread writer = new Thread(new Writer());
+            writer.start();
             while (true){
                 Socket socket = serverSocket.accept();
                 connection = new Connection(socket);
+                Message s = connection.receiveMessage();
                 Thread reader = new Thread(new Reader(connection));
                 reader.start();
-                Thread writer = new Thread(new Writer(connection));
-                writer.start();
+                if (!userMap.containsValue(connection)){
+                    userMap.put(s.getSender(), connection);
+                }
+
             }
         } catch (IOException e) {
             e.printStackTrace();

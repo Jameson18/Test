@@ -83,24 +83,30 @@ public class Client {
             Thread read = new Thread(new Read());
             read.start();
             String message;
-            for (int i = 0; i < 100; i++) {
+
                 System.out.println("Введите Имя");
                 name = scanner.nextLine();
                 connection.sendMessage(Message.getMessage(name, ""));
-                Thread.sleep(3000);
+                //Thread.sleep(3000);
+
                 if (access){
                     while (true){
                         System.out.println("Введите сообщение");
                         message = scanner.nextLine();
+                        Message s = Message.getMessage(name, message);
                         if ("exit".equalsIgnoreCase(message)){
                             connection.sendMessage(Message.getMessage(name, "disconnected"));
                             break;
-                        }else connection.sendMessage(Message.getMessage(name, message));
-                    }
-                }read.interrupt();
-                break;
+                        }else {
 
-            }
+                            connection.sendMessage(s);
+                            System.out.println(s);
+                        }
+                    }
+                }
+
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
